@@ -82,3 +82,55 @@ app.post("/signin", function(req,res){
     }
 
 })
+
+app.post("/signup", function(req,res){
+    const vname = req.body.v_name;
+    const nname = req.body.n_name;
+    const nutzername = req.body.username;
+    const e_mail = req.body.email;
+    const pw1 = req.body.password_1;
+    const pw2 = req.body.password_2;
+    let errors = [];
+
+    if(!vname){
+        errors.push('Vorname fehlt');
+    }
+    if(!nname){
+        errors.push('Nachname fehlt');
+    }
+    if(!nutzername){
+        errors.push('Username fehlt');
+    }
+    if(!e_mail){
+        errors.push('E-Mail fehlt');
+    }
+    if(!pw1){
+        errors.push('Passwort fehlt');
+    }
+    if(!pw2){
+        errors.push('Kein wiederholtes Passwort gegeben');
+    }
+
+    if(pw1!= pw2){
+        errors.push('Die Passwörter stimmen nicht überein')
+    }
+
+    if(errors.length < 1){
+        users.push({
+            vorname: vname,
+            nachname: nname,
+            username: nutzername,
+            email: e_mail,
+            password: pw1
+        });
+
+        res.render("registriert", {prename: vname, surname: nname, user_n: nutzername})
+    }else{
+        let errdata ='Fehler beim Registrieren:<ul>';
+        for(let e of errors){
+            errdata += `<li>${ e }</li>`;
+        }
+        data += '</ul>'
+        res.send(errdata + '<br><a href="signup">Try again</a>')
+    }
+})
