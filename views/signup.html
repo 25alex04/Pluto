@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Registrieren</title>
+    </head>
+    <body>
+        <h2>Erstellen Sie ihren Account.</h2>
+        <hr>
+        <form action="/signup" method="POST">
+            <fieldset> 
+                <div>
+                    Vorname:<br>
+                    <input type="text" name="v_name"><br>
+                </div>
+                <div>
+                    Nachname:<br>
+                    <input type="text" name="n_name"><br>
+                </div> 
+                <div>
+                    Username:<br> 
+                    <input type="text" name="username"><br>
+                </div>
+                <div>
+                    E-Mail:<br>
+                    <input type="email" name="email"><br>
+                </div>
+                <div>
+                    Passwort:<br>
+                    <input type="password" name="password_1"><br>
+                </div>
+                <div>
+                    Passwort wiederholen:<br>
+                    <input type="password" name="password_2"><br><br>
+                </div>
+                <button type="submit">Sign up.</button><br>
+            </fieldset> 
+        </form> 
+        <hr>
+        <p>Ich habe schon einen Account. <a href="/signin"> Anmelden.</a></p>
+        <p>Ach die Willkommensseite war so toll <a href="/">Back to the Roots :D</a></p>
+    </body>
+</html>
