@@ -116,15 +116,12 @@ app.post("/signup", function(req,res){
     }
 
     if(errors.length < 1){
-        users.push({
-            vorname: vname,
-            nachname: nname,
-            username: nutzername,
-            email: e_mail,
-            password: pw1
-        });
-
-        res.render("registriert", {prename: vname, surname: nname, user_n: nutzername})
+        db.run(
+            `INSERT INTO user(vorname,nachname,username,email,password) VALUES("${vname}","${nname}","${nutzername}","${e_mail}","${pw1}")`,
+            function(err){
+                res.render("registriert", {prename: vname, surname: nname, user_n: nutzername})
+            }
+        )
     }else{
         let errdata ='Fehler beim Registrieren:<ul>';
         for(let e of errors){
