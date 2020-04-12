@@ -11,11 +11,6 @@ const DATABASE = "shop.db";
 const sqlite3 = require("sqlite3").verbose();
 const db = new sqlite3.Database(DATABASE);
 
-//registrierte Nutzer
-let users = [
-    {vorname: 'Max', nachname: 'Mustermann', username: 'MundM', email: 'max.mustermann@web.de', password: '123'}
-]
-
 app.listen(3000, function(){
     console.log("listening on port 3000");
 });
@@ -33,6 +28,10 @@ app.get("/signup", function(req,res){
     res.sendFile(__dirname + "/views/signup.html")
 })
 
+app.get("/overview", function(req,res){
+    res.sendFile(__dirname + "/views/overview.html")
+})
+
 //Sign-in und Sign-up
 app.post("/signin", function(req,res){
     const u_name = req.body.username;
@@ -48,39 +47,45 @@ app.post("/signin", function(req,res){
         errors.push('Passwort fehlt')
     }
 
-    let u_name_exists = false;
-    for(let u of users){
-        if(u_name == u.username){
-            u_name_exists = true;
-            break
-        }
-    }
-    if(u_name_exists==false){
-        errors.push('Username existiert nicht')
-    }
-    
-    for (let u of users){
-        if(u_name == u.username){
-            if(pw == u.password){
-                succes = true;
-                break;
-            }else{
-                errors.push('falsches Passwort');
-                break;
+    db.all(
+        `SELECT * FROM user`,
+        function(err,rows){
+            const users = rows;
+            
+            let u_name_exists = false;
+            for(var i = 0; i<users.length;i++){
+                if(u_name == users[i].username){
+                    u_name_exists = true;
+                    break
+                }
             }
-        }
-    }
-    if(succes){
-        res.render("succes", {name1: u_name});
-    }else{
-        let errdata = 'Fehler beim Anmelden.<ul>';
-        for(let e of errors){
-            errdata += `<li>${ e }</li>`;
-        }
-        errdata +='</ul>';
-        res.send(errdata + '<br><a href="/signin">Try again</a>');
-    }
+            if(u_name_exists==false){
+                errors.push('Username existiert nicht')
+            }
 
+            for (var i = 0; i<users.length;i++){
+                if(u_name == users[i].username){
+                    if(pw == users[i].password){
+                        succes = true;
+                        break;
+                    }else{
+                        errors.push('falsches Passwort');
+                        break;
+                    }
+                }
+            }
+            
+            if(succes){
+                res.render("succes", {name1: u_name});
+            }else{
+                let errdata = 'Fehler beim Anmelden.<ul>';
+                for(let e of errors){
+                    errdata += `<li>${ e }</li>`;
+                }
+                errdata +='</ul>';
+                res.send(errdata + '<br><a href="/signin">Try again</a>');
+            }
+        })
 })
 
 app.post("/signup", function(req,res){
