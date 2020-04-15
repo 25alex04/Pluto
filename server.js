@@ -13,6 +13,13 @@ const db = new sqlite3.Database(DATABASE);
 
 const Bcrypt = require("bcrypt");
 
+const session = require('express-session');
+app.use(session({
+    secret:'example',
+    saveUninitialized: false,
+    resave: false
+}));
+
 
 app.listen(3000, function(){
     console.log("listening on port 3000");
@@ -35,6 +42,11 @@ app.get("/signup", function(req,res){
 
 app.get("/overview", function(req,res){
     res.sendFile(__dirname + "/views/overview.html")
+})
+
+app.get("/abmelden", function(req,res){
+    req.session.destroy();
+    res.sendFile(__dirname + "/views/welcome.html")
 })
 
 //Sign-in und Sign-up
@@ -83,6 +95,7 @@ app.post("/signin", function(req,res){
             }
             
             if(succes){
+                req.session.sessionValue = Bcrypt.hashSync(u_name);
                 res.render("succes", {name1: u_name});
             }else{
                 let errdata = 'Fehler beim Anmelden.<ul>';
