@@ -11,9 +11,14 @@ const DATABASE = "shop.db";
 const sqlite3 = require("sqlite3").verbose();
 const db = new sqlite3.Database(DATABASE);
 
+const Bcrypt = require("bcrypt");
+
+
 app.listen(3000, function(){
     console.log("listening on port 3000");
 });
+
+app.use(express.static(__dirname + '/public'));
 
 //get-Anfragen an Server
 app.get("/", function(req,res){
@@ -47,6 +52,8 @@ app.post("/signin", function(req,res){
         errors.push('Passwort fehlt')
     }
 
+    
+
     db.all(
         `SELECT * FROM user`,
         function(err,rows){
@@ -65,7 +72,7 @@ app.post("/signin", function(req,res){
 
             for (var i = 0; i<users.length;i++){
                 if(u_name == users[i].username){
-                    if(pw == users[i].password){
+                    if(Bcrypt.compareSync(pw,users[i].password)){
                         succes = true;
                         break;
                     }else{
@@ -120,9 +127,11 @@ app.post("/signup", function(req,res){
         errors.push('Die Passwörter stimmen nicht überein')
     }
 
+    const hash = Bcrypt.hashSync(pw1,10);
+
     if(errors.length < 1){
         db.run(
-            `INSERT INTO user(vorname,nachname,username,email,password) VALUES("${vname}","${nname}","${nutzername}","${e_mail}","${pw1}")`,
+            `INSERT INTO user(vorname,nachname,username,email,password) VALUES("${vname}","${nname}","${nutzername}","${e_mail}","${hash}")`,
             function(err){
                 res.render("registriert", {prename: vname, surname: nname, user_n: nutzername})
             }
