@@ -95,7 +95,7 @@ app.post("/signin", function(req,res){
             }
             
             if(succes){
-                req.session.sessionValue = Bcrypt.hashSync(u_name);
+                req.session.sessionValue = Bcrypt.hashSync(u_name,10);
                 res.render("succes", {name1: u_name});
             }else{
                 let errdata = 'Fehler beim Anmelden.<ul>';
