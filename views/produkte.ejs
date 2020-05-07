@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>ausgewählte Produktliste</title>
+    </head>
+    <body>
+        <table>
+            <% for(var i = 0; i<produkte.length;i++) { %>
+                <tr>
+                    <td><%= produkte[i].bild %></td>
+                    <td><%= produkte[i].name %></td>
+                    <td><%= produkte[i].preis %></td>
+                </tr>
+            <% } %>
+        </table>
+    </body>
+</html>

@@ -49,6 +49,15 @@ app.get("/abmelden", function(req,res){
     res.sendFile(__dirname + "/views/welcome.html")
 })
 
+app.get("/nudeln", function(req,res){
+    db.all(
+        `SELECT * FROM produkte`,
+        function(err,rows){
+            res.render("produkte", {"produkte": rows});
+        }
+    )
+})
+
 //Sign-in und Sign-up
 app.post("/signin", function(req,res){
     const u_name = req.body.username;
