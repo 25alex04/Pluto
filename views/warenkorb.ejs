@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Ihr Warenkorb</title>
+    </head>
+    <body>
+        <h1>Ihr Warenkorb</h1>
+        <br>
+        
+        <% if(warenkorb.length ==0){%>
+            <p>Ihr Warenkorb ist leer.</p>
+        <%}%>
+        
+        <fieldset>    
+            <table>
+                <% for(var i = 0; i<warenkorb.length;i++) { %>
+                    <tr>
+                        <td><img src="<%=warenkorb[i].bild%>" wigth="100" height="100"></td>
+                        <td><%= warenkorb[i].name %></td>
+                        <td></td><td></td>
+                        <td><%= warenkorb[i].preis %>€</td>
+                        <td></td><td></td>
+                        <td>
+                            <form action="/delete/<%=warenkorb[i].id%>" method="POST">
+                                <button type="submit">aus Warenkorb entfernen</button>
+                            </form>
+                        </td>
+                    </tr>
+                <% } %>
+            </table>
+        </fieldset>
+        <% var preis_insgesamt = 0%> %>
+        <% for(var i =0;i<warenkorb.length;i++){%>
+            <%preis_insgesamt+=warenkorb[i].preis%>
+        <%}%>
+        <p><%=preis_insgesamt%>€ kostet Ihr Einkauf</p>
+        <form action="/buy" method="POST">
+            <button type="submit">Jetzt kaufen</button>
+        </form><br>
+        <a href="/overview">zum Überblick</a><br>
+        <a href="/abmelden">Abmelden</a>
+    </body>
+</html>

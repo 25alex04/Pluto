@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>fast fertit...</title>
+    </head>
+    <body>
+        <h3>fast fertig...</h3>
+        <fieldset>    
+            <table>
+                <% for(var i = 0; i<warenkorb.length;i++) { %>
+                    <tr>
+                        <td><img src="<%=warenkorb[i].bild%>" wigth="100" height="100"></td>
+                        <td><%= warenkorb[i].name %></td>
+                        <td></td><td></td>
+                        <td><%= warenkorb[i].preis %>€</td>
+                    </tr>
+                <% } %>
+            </table>
+        </fieldset>
+        <% var preis_insgesamt = 0%> %>
+        <% for(var i =0;i<warenkorb.length;i++){%>
+            <%preis_insgesamt+=warenkorb[i].preis%>
+        <%}%>
+        <p>Ihr Einkauf kostet insgesamt <%=preis_insgesamt%>€</p><br>
+        <fieldset>
+            <p>Ihre Bestellung wird geliefert zu:</p><br>
+            <p>Ort: <%=Ort%></p><br>
+            <p>Postleitzahl: <%=PLZ%></p><br>
+            <p>Straße: <%=Straße%></p><br>
+            <p>Hausnummer: <%=Hausnummer%></p>
+        </fieldset><br>
+        <fieldset>
+            <p>Ihre Zahlungsmethode:</p>
+            <p>Zahlung via <%=Zahlung%></p>
+        </fieldset>
+        <form action="/gekauft" method="POST">
+            <button type="submit">Jetzt kostenpflichtig kaufen</button>
+        </form>
+        <a href="/warenkorb">abbrechen</a>
+    </body>
+</html>

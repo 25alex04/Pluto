@@ -51,9 +51,47 @@ app.get("/abmelden", function(req,res){
 
 app.get("/nudeln", function(req,res){
     db.all(
-        `SELECT * FROM produkte`,
+        `SELECT * FROM produkte WHERE kategorie="nudeln"`,
         function(err,rows){
-            res.render("produkte", {"produkte": rows});
+            res.render("produkte", {"produkte": rows, "kategorie": "Nudeln"});
+        }
+    )
+})
+app.get("/klopapier", function(req,res){
+    db.all(
+        `SELECT * FROM produkte WHERE kategorie="klopapier"`,
+        function(err,rows){
+            res.render("produkte", {"produkte": rows,"kategorie": "Klopapier"});
+        }
+    )
+})
+app.get("/desinfektionszeug", function(req,res){
+    db.all(
+        `SELECT * FROM produkte WHERE kategorie="desinfektion"`,
+        function(err,rows){
+            res.render("produkte", {"produkte": rows, "kategorie": "Desinfektionsmittel"});
+        }
+    )
+})
+
+app.get("/warenkorb", function(req,res){
+    if(req.session.sessionValue != null){
+        db.all(
+            `SELECT * FROM warenkorb WHERE nutzer="${req.session.sessionValue[1]}"`,
+            function(err,rows){
+                res.render("warenkorb",{"warenkorb":rows})
+            }
+        )
+    }else{
+        res.sendFile(__dirname + "/views/signin.html")
+    }
+})
+
+app.get("/kaufen",function(req,res){
+    db.all(
+        `SELECT * FROM warenkorb WHERE nutzer="${req.session.sessionValue[1]}"`,
+        function(err,rows){
+            res.render("kaufen",{"warenkorb":rows})
         }
     )
 })
@@ -104,7 +142,7 @@ app.post("/signin", function(req,res){
             }
             
             if(succes){
-                req.session.sessionValue = Bcrypt.hashSync(u_name,10);
+                req.session.sessionValue = [Bcrypt.hashSync(u_name,10),u_name];
                 res.render("succes", {name1: u_name});
             }else{
                 let errdata = 'Fehler beim Anmelden.<ul>';
@@ -163,7 +201,135 @@ app.post("/signup", function(req,res){
         for(let e of errors){
             errdata += `<li>${ e }</li>`;
         }
-        data += '</ul>'
-        res.send(errdata + '<br><a href="signup">Try again</a>')
+        errdata += '</ul>'
+        res.send(errdata + '<br><a href="/signup">Try again</a>')
     }
+})
+
+app.post("/details/:id", function(req,res){
+    if(req.session.sessionValue != null) {  
+        db.all(
+            `SELECT * FROM produkte WHERE id=${req.params.id}`,
+            function(err,rows){
+                res.render("details", {"produkt": rows});
+            }
+        )
+    }else{
+        res.sendFile(__dirname + "/views/signin.html")
+    }
+})
+
+app.post("/indenwarenkorb/:id", function(req,res){
+    db.all(
+        `SELECT * FROM produkte WHERE id=${req.params.id}`,
+        function(err,rows){
+            res.render("sure",{"pro":rows});
+        }
+    )
+})
+
+app.post("/unsicher/:id", function(req,res){
+    db.all(
+        `SELECT * FROM produkte WHERE id=${req.params.id}`,
+        function(err,rows){
+            res.render("details",{"produkt":rows});
+        }
+    )
+})
+
+app.post("/sicher/:id", function(req,res){
+    db.all(
+        `SELECT * FROM produkte WHERE id=${req.params.id}`,
+        function(err,rows){
+            const p_name = rows[0].name
+            const p_preis = rows[0].preis
+            const p_bild = rows[0].bild
+            const p_nutzer= req.session.sessionValue[1]
+            db.run(
+                `INSERT INTO warenkorb(name,preis,bild,nutzer) VALUES("${p_name}",${p_preis},"${p_bild}", "${p_nutzer}")`,
+                function(err){}
+            )
+            res.render("details",{"produkt":rows});
+        },
+    )    
+})
+
+app.post("/delete/:id",function(req,res){
+    db.run(
+        `DELETE FROM warenkorb WHERE id=${req.params.id}`,
+        function(err){
+            res.redirect("/warenkorb");
+        }
+    )
+})
+
+app.post("/buy",function(req,res){
+    db.all(
+        `SELECT * FROM warenkorb WHERE nutzer="${req.session.sessionValue[1]}"`,
+        function(err,rows){
+            if(rows.length !=0){
+                res.render("kaufen",{"warenkorb":rows})
+            }else{
+                res.send('<p>Ihr Warenkorb ist leer</p><br><a href="/overview">Zur Übersicht</a>')
+            }
+        }
+    )
+})
+
+app.post("/infos",function(req,res){
+    const Ort = req.body.ort
+    const PLZ = req.body.plz 
+    const Straße = req.body.straße 
+    const Hausnummer = req.body.hausnummer 
+    const Zahlung = req.body.zahlung 
+    let errors = []
+    
+    if(!Ort){
+        errors.push('Ort nicht angegeben')
+    }
+    if(!PLZ){
+        errors.push('Postleitzahl nicht angegeben')
+    }
+    if(!Straße){
+        errors.push('Straße nicht angegeben')
+    }
+    if(!Hausnummer){
+        errors.push('Hausnummer nicht angegeben')
+    }
+    if(!Zahlung){
+        errors.push('Zahlungsmethode wurde nicht angegeben')
+    }
+
+    if(errors.length <1){
+        db.all(
+            `SELECT * FROM warenkorb WHERE nutzer="${req.session.sessionValue[1]}"`,
+            function(err,rows){
+                res.render("fast_fertig",{"warenkorb":rows, "Ort":Ort,"PLZ":PLZ,"Straße":Straße,"Hausnummer":Hausnummer,"Zahlung":Zahlung})
+            }
+        )        
+    }else{
+        let errdata ='Fehler bei der Kaufabwicklung:<ul>';
+        for(let e of errors){
+            errdata += `<li>${ e }</li>`;
+        }
+        errdata += '</ul>'
+        res.send(errdata + '<br><a href="/kaufen">zurück</a>')
+    }
+
+})
+
+app.post("/gekauft",function(req,res){
+    res.sendFile(__dirname+"/views/sure2.html")
+})
+
+app.post("/kaufen",function(req,res){
+    db.run(
+        `DELETE FROM warenkorb WHERE nutzer="${req.session.sessionValue[1]}"`,
+        function(err){
+            res.sendFile(__dirname+"/views/erfolgreich.html")
+        }
+    )
+})
+app.post("/nicht_kaufen",function(req,res){
+    res.redirect("/kaufen")
 })

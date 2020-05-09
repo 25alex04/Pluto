@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%=produkt[0].name%></title>
+    </head>
+    <body>
+        <h1><%=produkt[0].name%></h1>
+        <img src="<%=produkt[0].bild%>" wigth="150" height="150"><br>
+        <p>Eine Packung <%=produkt[0].name%> gibt es zum Preis von <%=produkt[0].preis%>€</p>
+        <form action="/indenwarenkorb/<%=produkt[0].id%>" method="POST">
+            <button type="submit">Produkt in den Warenkorb packen</button>
+        </form>
+        <br><br>
+        <h7>Beschreibung:</h7>
+        <p><%=produkt[0].beschreibung%></p>
+        <a href="/warenkorb">zum Warenkorb</a>
+        <a href="/nudeln">zurück zu Nudeln</a>
+    </body>
+</html>

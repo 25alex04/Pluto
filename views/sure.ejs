@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+    <head><title>Sicher?</title></head>
+    <body>
+        <p>Wollen Sie <%=pro[0].name%> in ihren Warenkorb packen?</p>
+        <form action="/sicher/<%=pro[0].id%>" method="POST">
+            <button type="submit">Ja</button>
+        </form>
+        <form action="/unsicher/<%=pro[0].id%>" method="POST">
+            <button type="submit">Nein</button>
+        </form>
+    </body>
+</html>

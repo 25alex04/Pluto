@@ -4,14 +4,25 @@
         <title>ausgewählte Produktliste</title>
     </head>
     <body>
+        <h1><%=kategorie%></h1>
         <table>
             <% for(var i = 0; i<produkte.length;i++) { %>
                 <tr>
-                    <td><%= produkte[i].bild %></td>
+                    <td><img src="<%=produkte[i].bild%>" wigth="100" height="100"></td>
                     <td><%= produkte[i].name %></td>
-                    <td><%= produkte[i].preis %></td>
+                    <td></td><td></td>
+                    <td><%= produkte[i].preis %>€</td>
+                    <td></td><td></td>
+                    <td>
+                        <form action="/details/<%=produkte[i].id%>" method="POST">
+                            <button type="submit">Details anzeigen</button>
+                        </form>
+                    </td>
                 </tr>
             <% } %>
         </table>
+        <a href="/overview">zurück zur Produktübersicht</a><br>
+        <a href="/abmelden">Abmelden</a><br>
+        <a href="/warenkorb">Zum meinem Warenkorb</a><br>
     </body>
 </html>

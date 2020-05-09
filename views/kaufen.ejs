@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Jetzt Kaufen</title>
+    </head>
+    <body>
+        <h1>Liefer- und Zahlungsinformationen</h1>
+        <fieldset>    
+            <table>
+                <% for(var i = 0; i<warenkorb.length;i++) { %>
+                    <tr>
+                        <td><img src="<%=warenkorb[i].bild%>" wigth="100" height="100"></td>
+                        <td><%= warenkorb[i].name %></td>
+                        <td></td><td></td>
+                        <td><%= warenkorb[i].preis %>€</td>
+                    </tr>
+                <% } %>
+            </table>
+        </fieldset>
+        <% var preis_insgesamt = 0%> %>
+        <% for(var i =0;i<warenkorb.length;i++){%>
+            <%preis_insgesamt+=warenkorb[i].preis%>
+        <%}%>
+        <p>Ihr Einkauf kostet insgesamt <%=preis_insgesamt%>€</p><br>
+        <p>Geben Sie zunächst ihre Liefer- und Zahlungsinformationen an:</p>
+        <form action="/infos" method="POST">
+            <fieldset>    
+                <p>Wohin sollen Ihre Produkte geschickt werden?</p><br>
+                Ort:<br>
+                <input type="text" name="ort"><br>
+                Postleitzahl:<br>
+                <input type="number" name="plz"><br>
+                Straße:<br>
+                <input type="text" name="straße"><br>
+                Hausnummer:<br>
+                <input type="number" name="hausnummer"><br>
+            </fieldset><br>
+            <fieldset>
+                <p>Wie würden Sie gerne zahlen?</p><br>
+                <input type="radio" name="zahlung" value="Klarna">
+                <label for="Klarna">Klarna</label><br>
+                <input type="radio" name="zahlung" value="Lastschrift">
+                <label for="Lastschrift">Lastschrift</label><br>
+                <input type="radio" name="zahlung" value="Paypal">
+                <label for="Paypal">Paypal</label><br>
+                <input type="radio" name="zahlung" value="Sofortüberweisung">
+                <label for="Sofortüberweisung">Sofortüberweisung</label><br>
+                <input type="radio" name="zahlung" value="Kreditkarte">
+                <label for="Kreditkarte">Kreditkarte</label>
+            </fieldset>
+            <button type="submit">Weiter</button>
+        </form>
+        <a href="/warenkorb">Abbrechen</a>
+    </body>
+</html>
