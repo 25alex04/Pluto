@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Username vergessen</title>
+    </head>
+    <body>
+        <h1>Sie haben Ihren Username vergessen? Kein Problem</h1>
+        <form action="/u_vergessen" method="POST">
+            Ihre genutzte E-Mail:<br>
+            <input type="email" name="e_mail"><br>
+            Ihr Passwort:<br>
+            <input type="password" name="pw"><br>
+            Ihre Sicherheitszahlen:<br>
+            Zahl 1: <input type="number" name="z1"><br>
+            Zahl 2: <input type="number" name="z2"><br>
+            Zahl 3: <input type="number" name="z3"><br>
+            <button type="submit">Bestätigen</button><br>
+        </form>
+        <a href="/signin">Zurück zur Anmeldung</a>
+    </body>
+</html>

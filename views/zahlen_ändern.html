@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Sicherheitszahlen ändern</title>
+    </head>
+    <body>
+        <h1>Ändern Sie hier Ihre Sicherheitszahlen:</h1>
+        <form action="/neue_zahlen" method="POST">
+            Ihr Passwort:<br>
+            <input type="password" name="pw"><br>
+            Ihre neuen Sicherheitszahlen zwischen 0 und 1000(bitte aufschreiben):<br>
+            Zahl 1: <input type="number" name="z_1"><br>
+            Zahl 2: <input type="number" name="z_2"><br>
+            Zahl 3: <input type="number" name="z_3"><br>
+            <button type="submit">Bestätigen</button><br>
+        </form>
+        <a href="/warenkorb">Zurück zum Warenkorb</a>
+    </body>
+</html>

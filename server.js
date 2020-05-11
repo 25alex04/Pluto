@@ -96,6 +96,30 @@ app.get("/kaufen",function(req,res){
     )
 })
 
+app.get("/username",function(req,res){
+    res.sendFile(__dirname + "/views/username.html")
+})
+
+app.get("/password",function(req,res){
+    res.sendFile(__dirname + "/views/password.html")
+})
+
+app.get("/email",function(req,res){
+    if(req.session.sessionValue != null){
+        res.sendFile(__dirname + "/views/email.html")
+    }else{
+        res.sendFile(__dirname + "/views/signin.html")
+    }
+})
+
+app.get("/zahlen",function(req,res){
+    if(req.session.sessionValue != null){
+        res.sendFile(__dirname + "/views/zahlen_ändern.html")
+    }else{
+        res.sendFile(__dirname + "/views/signin.html")
+    }
+})
+
 //Sign-in und Sign-up
 app.post("/signin", function(req,res){
     const u_name = req.body.username;
@@ -162,6 +186,9 @@ app.post("/signup", function(req,res){
     const e_mail = req.body.email;
     const pw1 = req.body.password_1;
     const pw2 = req.body.password_2;
+    const z1 = req.body.z_1;
+    const z2 = req.body.z_2;
+    const z3 = req.body.z_3;
     let errors = [];
 
     if(!vname){
@@ -183,15 +210,50 @@ app.post("/signup", function(req,res){
         errors.push('Kein wiederholtes Passwort gegeben');
     }
 
+    if(!z1){
+        errors.push('Erste Sicherheitszahl nicht gegeben')
+    }
+
+    if(!z2){
+        errors.push('Zweite Sicherheitszahl nicht gegeben')
+    }
+
+    if(!z3){
+        errors.push('Dritte Sicherheitszahl nicht gegeben')
+    }
+
+    if(z1<1 || z1>999){
+        errors.push('Sicherheitszahl 1 ist nicht im vorgegebenen Rahmen')
+    }
+
+    if(z2<1 || z2>999){
+        errors.push('Sicherheitszahl 2 ist nicht im vorgegebenen Rahmen')
+    }
+
+    if(z3<1 || z3>999){
+        errors.push('Sicherheitszahl 3 ist nicht im vorgegebenen Rahmen')
+    }
+
     if(pw1!= pw2){
         errors.push('Die Passwörter stimmen nicht überein')
     }
+
+    db.all(
+        `SELECT * FROM user`,
+        function(err,rows){
+            for(var i=0;i<rows.length;i++){
+                if(rows[i].username==nutzername){
+                    errors.push('Username existiert schon')
+                }
+            }
+        }
+    )
 
     const hash = Bcrypt.hashSync(pw1,10);
 
     if(errors.length < 1){
         db.run(
-            `INSERT INTO user(vorname,nachname,username,email,password) VALUES("${vname}","${nname}","${nutzername}","${e_mail}","${hash}")`,
+            `INSERT INTO user(vorname,nachname,username,email,password,zahl1,zahl2,zahl3) VALUES("${vname}","${nname}","${nutzername}","${e_mail}","${hash}",${z1},${z2},${z3})`,
             function(err){
                 res.render("registriert", {prename: vname, surname: nname, user_n: nutzername})
             }
@@ -332,4 +394,226 @@ app.post("/kaufen",function(req,res){
 })
 app.post("/nicht_kaufen",function(req,res){
     res.redirect("/kaufen")
+})
+
+app.post("/u_vergessen",function(req,res){
+    const email = req.body.e_mail
+    const password = req.body.pw
+    const z_1 = req.body.z1
+    const z_2 = req.body.z2
+    const z_3 = req.body.z3
+    let errors = []
+
+    if(!email){
+        errors.push('Keine E-Mail gegeben')
+    }
+    
+    if(!password){
+        errors.push('Kein Passwort gegeben')
+    }
+
+    if(!z_1){
+        errors.push('1. Sicherheitszahl nicht gegeben')
+    }
+
+    if(!z_2){
+        errors.push('2. Sicherheitszahl nicht gegeben')
+    }
+
+    if(!z_3){
+        errors.push('3. Sicherheitszahl nicht gegeben')
+    }
+
+    db.all(
+        `SELECT * FROM user WHERE email="${email}"`,
+        function(err,rows){
+            if(rows.length<1){
+                errors.push('Ihre E-Mail existiert noch nicht')
+            }
+
+            if(!Bcrypt.compareSync(password,rows[0].password)){
+                errors.push('Ihr Passwort stimmt nicht mit der E-Mail überein')
+            }
+
+            if(z_1!=rows[0].zahl1 || z_2!=rows[0].zahl2  || z_3!=rows[0].zahl3){
+                errors.push('Mindestens eine Ihrer Sicherheitszahlen ist falsch')
+            }
+
+            if(errors.length<1){
+                res.render("nutzername",{"n_name":rows[0].username})
+            }else{
+                let errdata ='Wir können Ihnen Ihren Username nicht sagen:<ul>';
+                for(let e of errors){
+                    errdata += `<li>${ e }</li>`;
+                }
+                errdata += '</ul>'
+                res.send(errdata + '<br><a href="/username">zurück</a>')
+            }
+        }
+    )
+})
+
+app.post("/pw_vergessen",function(req,res){
+    const username = req.body.u_name
+    const z_1 = req.body.z1
+    const z_2 = req.body.z2
+    const z_3 = req.body.z3
+    const pw1 = req.body.pw_1
+    const pw2 = req.body.pw_2
+    let errors = []
+
+    if(!username){
+        errors.push('keinen Username angegeben')
+    }
+    if(!z_1){
+        errors.push('1. Sicherheitszahl nicht gegeben')
+    }
+
+    if(!z_2){
+        errors.push('2. Sicherheitszahl nicht gegeben')
+    }
+
+    if(!z_3){
+        errors.push('3. Sicherheitszahl nicht gegeben')
+    }
+
+    if(pw1!=pw2){
+        errors.push('Ihre angegebenen Passwörter stimmen nicht überein')
+    }
+
+    db.all(
+        `SELECT * FROM user WHERE username="${username}"`,
+        function(err,rows){
+            
+            if(rows.length<1){
+                errors.push('Ihre Username existiert noch nicht')
+            }
+
+            if(z_1!=rows[0].zahl1 || z_2!=rows[0].zahl2  || z_3!=rows[0].zahl3){
+                errors.push('Mindestens eine Ihrer Sicherheitszahlen ist falsch')
+            }
+
+            const hash = Bcrypt.hashSync(pw1,10);
+
+            if(errors.length<1){
+                db.run(
+                    `UPDATE user SET password="${hash}" WHERE username="${username}"`,
+                    function(err){}
+                )
+                res.render("passwort",{"n_name":username})
+            }else{
+                let errdata ='Wir konnten Ihr Passwort nicht ändern:<ul>';
+                for(let e of errors){
+                    errdata += `<li>${ e }</li>`;
+                }
+                errdata += '</ul>'
+                res.send(errdata + '<br><a href="/password">zurück</a>')
+            }
+        })
+})
+
+app.post("/geandert",function(req,res){
+    const user = req.session.sessionValue[1]
+    const password = req.body.pw
+    const email1 = req.body.email1
+    const email2 = req.body.email2
+    let errors = []
+
+    if(!password){
+        errors.push('Passwort fehlt')
+    }
+
+    if(!email1){
+        errors.push('E-Mail nicht gegeben')
+    }
+
+    if(!email2){
+        errors.push('E-Mail nicht wiederholt')
+    }
+
+    if(email1!=email2){
+        errors.push('E-Mails stimmen nicht überein')
+    }
+    db.all(
+        `SELECT * FROM user WHERE username="${user}"`,
+        function(err,rows){
+            if(!Bcrypt.compareSync(password,rows[0].password)){
+                errors.push('Falsches Passwort')
+            }
+            if(errors.length<1){
+                db.run(
+                    `UPDATE user SET email="${email1}" WHERE username="${user}"`,
+                    function(err){}
+                )
+                res.render("email_geändert",{"email":email1,"user":user}) 
+            }else{
+                let errdata ='Wir konnten Ihre E-Mail nicht ändern:<ul>';
+                for(let e of errors){
+                    errdata += `<li>${ e }</li>`;
+                }
+                errdata += '</ul>'
+                res.send(errdata + '<br><a href="/email">zurück</a>')
+            }
+        }
+    )
+})
+
+app.post("/neue_zahlen",function(req,res){
+    const user = req.session.sessionValue[1]
+    const pw = req.body.pw
+    const z1 = req.body.z_1
+    const z2 = req.body.z_2
+    const z3 = req.body.z_3
+    let errors = []
+
+    if(!pw){
+        errors.push('Passwort fehlt')
+    }
+
+    if(!z1){
+        errors.push('Ihre erste Sicherheitszahl fehlt')
+    }
+
+    if(!z2){
+        errors.push('Ihre zweite Sicherheitszahl fehlt')
+    }
+
+    if(!z3){
+        errors.push('Ihre dritte Sicherheitszahl fehlt')
+    }
+
+    if(z1<1 || z1>999){
+        errors.push('Sicherheitszahl 1 ist nicht im vorgegebenen Rahmen')
+    }
+
+    if(z2<1 || z2>999){
+        errors.push('Sicherheitszahl 2 ist nicht im vorgegebenen Rahmen')
+    }
+
+    if(z3<1 || z3>999){
+        errors.push('Sicherheitszahl 3 ist nicht im vorgegebenen Rahmen')
+    }
+
+    db.all(
+        `SELECT * FROM user WHERE username="${user}"`,
+        function(err,rows){
+            if(!Bcrypt.compareSync(pw,rows[0].password)){
+                errors.push('Falsches Passwort')
+            }
+            if(errors.length<1){
+                db.run(
+                    `UPDATE user SET zahl1=${z1},zahl2=${z2},zahl3=${z3} WHERE username="${user}`,
+                    function(err){}
+                )
+                res.redirect("/warenkorb")
+            }else{
+                let errdata ='Wir konnten Ihre Sicherheitszahlen nicht ändern:<ul>';
+                for(let e of errors){
+                    errdata += `<li>${ e }</li>`;
+                }
+                errdata += '</ul>'
+                res.send(errdata + '<br><a href="/zahlen">zurück</a>')
+            }
+        }
+    )
 })
