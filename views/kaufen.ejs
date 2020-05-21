@@ -2,54 +2,110 @@
 <html>
     <head>
         <title>Jetzt Kaufen</title>
+        <link rel='stylesheet' href='/css/style.css' />
+        <style>
+            h1{
+                display:flex;
+                flex-direction: row;
+                justify-content:left;
+                align-items: left;
+                margin-top: 2%;
+                margin-bottom: 2%;
+                margin-left: 2%;
+                font-size: 200%;
+            }
+            h2{
+                display:flex;
+                flex-direction: row;
+                justify-content:left;
+                align-items: left;
+                margin-top: 0;
+                margin-bottom: 2%;
+                margin-left: 2%;
+                font-size: 150%;
+            }
+
+            p{
+                font-size: 150%;
+                margin-top: 1%;
+                margin-left: 1%;
+            }
+
+            button{
+                background-color: #5882fa;
+                height:50px;
+                width:110px;
+                cursor:pointer;
+                margin-top:1%;
+                margin-left: 2%;
+                font-size: 120%;
+            }
+        </style>
     </head>
     <body>
         <h1>Liefer- und Zahlungsinformationen</h1>
-        <fieldset>    
-            <table>
+        <fieldset id="drei">    
+            <table id="produkte">
                 <% for(var i = 0; i<warenkorb.length;i++) { %>
                     <tr>
                         <td><img src="<%=warenkorb[i].bild%>" wigth="100" height="100"></td>
                         <td><%= warenkorb[i].name %></td>
-                        <td></td><td></td>
                         <td><%= warenkorb[i].preis %>€</td>
                     </tr>
                 <% } %>
             </table>
-        </fieldset>
+        </fieldset id="drei">
         <% var preis_insgesamt = 0%> %>
         <% for(var i =0;i<warenkorb.length;i++){%>
             <%preis_insgesamt+=warenkorb[i].preis%>
         <%}%>
-        <p>Ihr Einkauf kostet insgesamt <%=preis_insgesamt%>€</p><br>
-        <p>Geben Sie zunächst ihre Liefer- und Zahlungsinformationen an:</p>
+        <p id="wpreis" >Ihr Einkauf kostet insgesamt <%=preis_insgesamt%>€</p><br>
+        <h2>Geben Sie zunächst ihre Liefer- und Zahlungsinformationen an:</h2>
         <form action="/infos" method="POST">
-            <fieldset>    
+            <fieldset id="drei">    
                 <p>Wohin sollen Ihre Produkte geschickt werden?</p><br>
-                Ort:<br>
-                <input type="text" name="ort"><br>
-                Postleitzahl:<br>
-                <input type="number" name="plz"><br>
-                Straße:<br>
-                <input type="text" name="straße"><br>
-                Hausnummer:<br>
-                <input type="number" name="hausnummer"><br>
+                <div id="eingabe">
+                    Ort:<br>
+                    <input type="text" name="ort"><br>
+                </div>
+                <div id="eingabe">
+                    Postleitzahl:<br>
+                    <input type="number" name="plz"><br>
+                </div>
+                <div id="eingabe">
+                    Straße:<br>
+                    <input type="text" name="straße"><br>
+                </div>
+                <div id="eingabe">
+                    Hausnummer:<br>
+                    <input type="number" name="hausnummer"><br>
+                </div>
             </fieldset><br>
-            <fieldset>
+            <fieldset id="drei">
                 <p>Wie würden Sie gerne zahlen?</p><br>
-                <input type="radio" name="zahlung" value="Klarna">
-                <label for="Klarna">Klarna</label><br>
-                <input type="radio" name="zahlung" value="Lastschrift">
-                <label for="Lastschrift">Lastschrift</label><br>
-                <input type="radio" name="zahlung" value="Paypal">
-                <label for="Paypal">Paypal</label><br>
-                <input type="radio" name="zahlung" value="Sofortüberweisung">
-                <label for="Sofortüberweisung">Sofortüberweisung</label><br>
-                <input type="radio" name="zahlung" value="Kreditkarte">
-                <label for="Kreditkarte">Kreditkarte</label>
+                <div id="eingabe">
+                    <input type="radio" name="zahlung" value="Klarna">
+                    <label for="Klarna">Klarna</label><br>
+                </div>
+                <div id="eingabe">
+                    <input type="radio" name="zahlung" value="Lastschrift">
+                    <label for="Lastschrift">Lastschrift</label><br>
+                </div>
+                <div id="eingabe">
+                    <input type="radio" name="zahlung" value="Paypal">
+                    <label for="Paypal">Paypal</label><br>
+                </div>
+                <div id="eingabe">
+                    <input type="radio" name="zahlung" value="Sofortüberweisung">
+                    <label for="Sofortüberweisung">Sofortüberweisung</label><br>
+                </div>
+                <div id="eingabe">
+                    <input type="radio" name="zahlung" value="Kreditkarte">
+                    <label for="Kreditkarte">Kreditkarte</label>
+                </div>
             </fieldset>
-            <button type="submit">Weiter</button>
+            <button type="submit">Weiter</button><button id="abbrechen"><a id="link" href="/warenkorb">Abbrechen</a></button><br>
         </form>
-        <a href="/warenkorb">Abbrechen</a>
+        
     </body>
 </html>

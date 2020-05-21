@@ -1,0 +1,246 @@
+* {
+    font-family:'Arial';
+    padding: 0;
+    margin: 0;
+    background-color: #A9BCF5;
+}
+
+#welcome{
+    display:flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-top: 2%;
+    font-size: 150%;
+    
+}
+
+img{
+    border-radius: 10px;
+}
+
+input{
+    border:1px solid black;
+    border-radius: 5px;
+    line-height: 150%;
+    font-size: 100%;
+}
+
+h2{
+    display:flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-bottom: 2%;
+    margin-top: 2%;
+    font-size: 190%;;
+}
+
+#formular{
+    display:flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    font-size: 150%;
+}
+
+button{
+    background-color: #5882fa;
+    height:30px;
+    width:60px;
+    cursor:pointer;
+}
+button:hover{
+    background-color:#5858fa;
+}
+
+#button1{
+    display:flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-top: 1%;
+    margin-bottom:2% ;
+    font-size: 150%;
+    
+}
+
+#button2{
+    margin-left: 2%;
+    font-size: 130%;
+}
+
+#eins{
+    margin-right: 30%;
+    margin-left: 30%;
+    border: 1px solid black;
+    border-radius: 7px;
+    border-width: 2px;
+}
+
+#zwei{
+    margin-right: 20%;
+    margin-left: 20%;
+    border: 1px solid black;
+    border-radius: 7px;
+    border-width: 2px; 
+}
+#drei{
+    margin-right: 2%;
+    margin-left: 2%;
+    border: 1px solid black;
+    border-radius: 7px;
+    border-width: 2px; 
+    margin-bottom: 5px;
+}
+
+#regis{
+    display:flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-top:1%;
+}
+
+#extrawurst{
+    font-size: 80%;
+}
+
+#erfolgreich{
+    display:flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-top: 2%;
+    font-size: 150%;
+}
+
+#overview{
+    display:flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-top: 2%;
+    font-size: 150%;
+}
+
+#produkte{
+    border-collapse: collapse;
+    width:100%;
+    font-size: 130%;
+}
+
+#produkte td{
+    text-align: center;
+    border:2px solid black;
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+#a1{
+    margin-left: 2%;
+    margin-right:79%;
+    padding-bottom: 2%;
+}
+#a2{
+    margin-left: 2%;
+    margin-right:77%;
+    padding-bottom: 2%;
+}
+
+#text{
+    margin-bottom: 2px;
+    margin-right: 2px;
+    margin-top: 2px;
+    margin-left: 2px;
+}
+
+#preis{
+    display:block;
+    position: fixed;
+    bottom: 60%;
+    left:32%;
+    right:0;
+    top:23%;
+    font-size: 120%;
+    
+}
+
+#a3{
+    display:block;
+    position: fixed;
+    bottom: 90%;
+    left:87%;
+    right:2%;
+    top:4%;
+    font-size: 110%;
+}
+#a4{
+    margin-left: 2%;
+    margin-right:83%;
+    padding-bottom: 2%
+}
+
+#wpreis{
+    font-size: 150%;
+    margin-top: 2%;
+    margin-left: 2%;
+    margin-bottom: 1%;
+}
+
+#wlinks{
+    font-size: 110%;
+    margin-left: 2%;
+    margin-bottom: 1%;
+}
+
+#eingabe{
+    font-size: 110%;
+    margin-bottom: 1%;
+    margin-left: 2%;
+}
+
+#abbrechen{
+    margin-bottom: 1%;
+    margin-left: 80.5%;
+}
+
+#abbrechen2{
+    display:block;
+    position: fixed;
+    bottom: 10%;
+    left:88.3%;
+    right:2%;
+    top:91.6%;
+}
+
+#link{
+    background-color: #5882fa;
+}
+#kaufen{
+    font-size: 100%;
+    background-color: #5882fa;
+    height:60px;
+    width:150px;
+    cursor:pointer;
+    margin-top: 1%;
+}
+
+#sicher{
+    display:flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-bottom: 2%;
+    margin-top: 2%;
+    font-size: 150%;
+}
+
+#sure{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-bottom: 2%;
+    margin-top: 2%;
+}

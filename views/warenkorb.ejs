@@ -2,24 +2,43 @@
 <html>
     <head>
         <title>Ihr Warenkorb</title>
+        <link rel='stylesheet' href='/css/style.css' />
+        <style>
+            h1{
+                display:flex;
+                flex-direction: row;
+                justify-content:left;
+                align-items: left;
+                margin-top: 2%;
+                margin-bottom: 2%;
+                margin-left: 2%;
+                font-size: 200%;
+            }
+            button{
+                background-color: #5882fa;
+                height:50px;
+                width:130px;
+                cursor:pointer;
+                font-size: 80%;
+                margin-top:1%;
+            }
+            
+        </style>
     </head>
     <body>
         <h1>Ihr Warenkorb</h1>
-        <br>
         
         <% if(warenkorb.length ==0){%>
             <p>Ihr Warenkorb ist leer.</p>
         <%}%>
         
-        <fieldset>    
-            <table>
+        <fieldset id="drei">    
+            <table id="produkte">
                 <% for(var i = 0; i<warenkorb.length;i++) { %>
                     <tr>
                         <td><img src="<%=warenkorb[i].bild%>" wigth="100" height="100"></td>
                         <td><%= warenkorb[i].name %></td>
-                        <td></td><td></td>
                         <td><%= warenkorb[i].preis %>€</td>
-                        <td></td><td></td>
                         <td>
                             <form action="/delete/<%=warenkorb[i].id%>" method="POST">
                                 <button type="submit">aus Warenkorb entfernen</button>
@@ -33,14 +52,16 @@
         <% for(var i =0;i<warenkorb.length;i++){%>
             <%preis_insgesamt+=warenkorb[i].preis%>
         <%}%>
-        <p><%=preis_insgesamt%>€ kostet Ihr Einkauf</p>
+        <p id="wpreis"><%=preis_insgesamt%>€ kostet Ihr Einkauf</p>
         <form action="/buy" method="POST">
-            <button type="submit">Jetzt kaufen</button>
+            <button id="button2" type="submit">Jetzt kaufen</button>
         </form><br>
-        <p>Bedenken Sie das Ihre Bestell- und Zahlungsunterlagen an Ihre E-Mail geschickt werden <a href="/email">E-Mail ändern</a></p>
-        <p>Wollen Sie Ihre Sicherheitszahlen ändern?<a href="/zahlen">Hier ändern</a></p>
-        <a href="/password">Passwort ändern</a><br>
-        <a href="/overview">zum Überblick</a><br>
+        <div id="wlinks">
+            <p>Bedenken Sie das Ihre Bestell- und Zahlungsunterlagen an Ihre E-Mail geschickt werden <a href="/email">E-Mail ändern</a></p>
+            <p>Wollen Sie Ihre Sicherheitszahlen ändern?<a href="/zahlen">Hier ändern</a></p>
+            <p>Wollen Sie ihr <a href="/pw">Passwort ändern</a></p>
+        </div>
+        <a id="a4" href="/overview">zum Überblick</a>
         <a href="/abmelden">Abmelden</a>
     </body>
 </html>

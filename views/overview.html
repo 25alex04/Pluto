@@ -2,31 +2,44 @@
 <html>
     <head>
         <title>Übersicht.</title>
+        <link rel='stylesheet' href='/css/style.css' />
+        <style>
+            h1{
+                display:flex;
+                flex-direction: column;
+                justify-content: space-evenly;
+                align-items: center;
+                margin-top: 2%;
+                font-size: 200%;
+            }
+        </style>
     </head>
     <body>
         <h1>Der kleinste Store des Sonnensystems. Schauen Sie sich um!</h1>
-        <img src="/pics/pluto.jpg" alt="pluto" wigth="200" height="200"><br><br>
-        <p>Nach was für Produkten suchen Sie.</p>
-        <fieldset>    
-            <table>
+        <div id="overview">
+            <img src="/pics/pluto.jpg" alt="pluto" wigth="300" height="300"><br>
+            <p>Nach was für Produkten suchen Sie.</p><br>
+        </div>
+        <fieldset id="drei">    
+            <table id="produkte">
                 <tr>
-                    <td><img src="/pics/nudeln.jpg" alt="nudeln" wigth="50" height="50"></td>
+                    <td><img src="/pics/nudeln.jpg" alt="nudeln" wigth="90" height="90"></td>
                     <td><a href="/nudeln">Alles ums Thema Nudeln.</a></td>
                     <td>Von 2,09€ bis 3,99€</td>
                 </tr>
                 <tr>
-                    <td><img src="/pics/klopapier.jpg" alt="klopapier" wigth="50" height="50"></td>
+                    <td><img src="/pics/klopapier.jpg" alt="klopapier" wigth="90" height="90"></td>
                     <td><a href="/Klopapier">Ganz viel Klopapier</a></td>
                     <td>Von 1,99€ bis 4,99€</td>
                 </tr>
                 <tr>
-                    <td><img src="/pics/desinfektionszeug.jpg" alt="desinfektionszeug" wigth="50" height="50"></td>
+                    <td><img src="/pics/desinfektionszeug.jpg" alt="desinfektionszeug" wigth="90" height="90"></td>
                     <td><a href="/Desinfektionszeug">Alle möglichen Utensilien für desinfizieren</a></td>
                     <td>Von 5,99€ bis 7,49€</td>
                 </tr>
             </table>
         </fieldset>
-        <a href="/warenkorb">Zu meinem Warenkorb</a>
-        <a href="/abmelden">Abmelden</a> 
+        <a id="a1" href="/warenkorb">Zu meinem Warenkorb</a>
+        <a href="/abmelden">Abmelden</a>
     </body>
 </html> 

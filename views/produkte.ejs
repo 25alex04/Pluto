@@ -2,27 +2,47 @@
 <html>
     <head>
         <title>ausgewählte Produktliste</title>
+        <link rel='stylesheet' href='/css/style.css' />
+        <style>
+            h1{
+                display:flex;
+                flex-direction: column;
+                justify-content: space-evenly;
+                align-items: center;
+                margin-top: 2%;
+                margin-bottom: 2%;
+                font-size: 200%;
+            }
+            button{
+                background-color: #5882fa;
+                height:50px;
+                width:120px;
+                cursor:pointer;
+                font-size: 80%;
+                margin-top:1%;
+            }
+        </style>
     </head>
     <body>
         <h1><%=kategorie%></h1>
-        <table>
-            <% for(var i = 0; i<produkte.length;i++) { %>
-                <tr>
-                    <td><img src="<%=produkte[i].bild%>" wigth="100" height="100"></td>
-                    <td><%= produkte[i].name %></td>
-                    <td></td><td></td>
-                    <td><%= produkte[i].preis %>€</td>
-                    <td></td><td></td>
-                    <td>
-                        <form action="/details/<%=produkte[i].id%>" method="POST">
-                            <button type="submit">Details anzeigen</button>
-                        </form>
-                    </td>
-                </tr>
-            <% } %>
-        </table>
-        <a href="/overview">zurück zur Produktübersicht</a><br>
-        <a href="/abmelden">Abmelden</a><br>
-        <a href="/warenkorb">Zum meinem Warenkorb</a><br>
+        <fieldset id="drei">
+            <table id="produkte">
+                <% for(var i = 0; i<produkte.length;i++) { %>
+                    <tr>
+                        <td><img src="<%=produkte[i].bild%>" wigth="100" height="100"></td>
+                        <td><%= produkte[i].name %></td>
+                        <td><%= produkte[i].preis %>€</td>
+                        <td>
+                            <form action="/details/<%=produkte[i].id%>" method="POST">
+                                <button type="submit">Details anzeigen</button>
+                            </form>
+                        </td>
+                    </tr>
+                <% } %>
+            </table>
+        </fieldset><br>
+        <a id="a2" href="/overview">zurück zur Produktübersicht</a>
+        <a href="/abmelden">Abmelden</a><br><br>
+        <a id="a1" href="/warenkorb">Zum meinem Warenkorb</a>
     </body>
 </html>

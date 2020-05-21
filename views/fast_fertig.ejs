@@ -2,16 +2,44 @@
 <html>
     <head>
         <title>fast fertit...</title>
+        <link rel='stylesheet' href='/css/style.css' />
+        <style>
+            h3{
+                display:flex;
+                flex-direction: row;
+                justify-content:left;
+                align-items: left;
+                margin-top: 2%;
+                margin-bottom: 2%;
+                margin-left: 2%;
+                font-size: 200%;
+            }
+            p{
+                font-size: 150%;
+                margin-top: 1%;
+                margin-left: 2%;
+                margin-bottom: 1%;
+            }
+            button{
+                background-color: #5882fa;
+                height:50px;
+                width:110px;
+                cursor:pointer;
+                font-size: 80%;
+                margin-top:0;
+                margin-left: 2%;
+                font-size: 120%;
+            }
+        </style>
     </head>
     <body>
         <h3>fast fertig...</h3>
-        <fieldset>    
-            <table>
+        <fieldset id="drei">    
+            <table id="produkte">
                 <% for(var i = 0; i<warenkorb.length;i++) { %>
                     <tr>
                         <td><img src="<%=warenkorb[i].bild%>" wigth="100" height="100"></td>
                         <td><%= warenkorb[i].name %></td>
-                        <td></td><td></td>
                         <td><%= warenkorb[i].preis %>€</td>
                     </tr>
                 <% } %>
@@ -21,21 +49,21 @@
         <% for(var i =0;i<warenkorb.length;i++){%>
             <%preis_insgesamt+=warenkorb[i].preis%>
         <%}%>
-        <p>Ihr Einkauf kostet insgesamt <%=preis_insgesamt%>€</p><br>
-        <fieldset>
-            <p>Ihre Bestellung wird geliefert zu:</p><br>
-            <p>Ort: <%=Ort%></p><br>
-            <p>Postleitzahl: <%=PLZ%></p><br>
-            <p>Straße: <%=Straße%></p><br>
-            <p>Hausnummer: <%=Hausnummer%></p>
+        <p>Ihr Einkauf kostet insgesamt <%=preis_insgesamt%>€</p>
+        <fieldset id="drei">
+                <p>Ihre Bestellung wird geliefert zu:</p>
+                <p>Ort: <%=Ort%></p>
+                <p>Postleitzahl: <%=PLZ%></p>
+                <p>Straße: <%=Straße%></p>
+                <p>Hausnummer: <%=Hausnummer%></p>
         </fieldset><br>
-        <fieldset>
+        <fieldset id="drei">
             <p>Ihre Zahlungsmethode:</p>
             <p>Zahlung via <%=Zahlung%></p>
         </fieldset>
         <form action="/gekauft" method="POST">
-            <button type="submit">Jetzt kostenpflichtig kaufen</button>
+            <button id="kaufen" type="submit">Jetzt kostenpflichtig kaufen</button>
         </form>
-        <a href="/warenkorb">abbrechen</a>
+        <button id="abbrechen2"><a id="link" href="/warenkorb">Abbrechen</a></button>
     </body>
 </html>

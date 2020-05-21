@@ -2,18 +2,62 @@
 <html>
     <head>
         <title><%=produkt[0].name%></title>
+        <link rel='stylesheet' href='/css/style.css' />
+        <style>
+            h1{
+                display:flex;
+                flex-direction: row;
+                justify-content:left;
+                align-items: left;
+                margin-top: 2%;
+                margin-bottom: 2%;
+                margin-left: 2%;
+                font-size: 200%;
+            }
+            button{
+                background-color: #5882fa;
+                height:50px;
+                width:120px;
+                cursor:pointer;
+                font-size: 80%;
+                margin-top:1%;
+                display:block;
+                position: fixed;
+                bottom: 60%;
+                left:44%;
+                right:0;
+                top:25%;
+            }
+            img{
+                margin-left: 2%;
+            }
+            a{
+                margin-left: 2%;
+                margin-top: 2%;
+            }
+        </style>
     </head>
     <body>
         <h1><%=produkt[0].name%></h1>
-        <img src="<%=produkt[0].bild%>" wigth="150" height="150"><br>
-        <p>Eine Packung <%=produkt[0].name%> gibt es zum Preis von <%=produkt[0].preis%>€</p>
-        <form action="/indenwarenkorb/<%=produkt[0].id%>" method="POST">
-            <button type="submit">Produkt in den Warenkorb packen</button>
-        </form>
-        <br><br>
-        <h7>Beschreibung:</h7>
-        <p><%=produkt[0].beschreibung%></p>
-        <a href="/warenkorb">zum Warenkorb</a>
+        <img src="<%=produkt[0].bild%>" wigth="300" height="300"><br>
+        <div id="detail">
+            <div id="preis">
+                <p>Eine Packung <%=produkt[0].name%> gibt es zum Preis von <%=produkt[0].preis%>€</p>
+            </div>
+            <form action="/indenwarenkorb/<%=produkt[0].id%>" method="POST">
+                <button type="submit">Produkt in den Warenkorb packen</button>
+            </form>
+        </div>
+        <br>
+        <fieldset id="drei">
+            <div id="text">
+                <h7>Beschreibung:</h7>
+                <p><%=produkt[0].beschreibung%></p>
+            </div>
+        </fieldset>
+        <div id="a3">
+            <a href="/warenkorb">Ihr Warenkorb</a>
+        </div>
         <a href="/nudeln">zurück zu Nudeln</a>
     </body>
 </html>

@@ -2,14 +2,30 @@
 <html>
     <head>
         <title>sicher?</title>
+        <link rel='stylesheet' href='/css/style.css' />
+        <style>
+            form{
+                margin-left: 10%;
+                margin-right: 10%;
+            }
+            button{
+                font-size: 120%;
+                height:50px;
+                width: 150px;
+            }
+        </style>
     </head>
     <body>
-        <h3>Sind Sie sich sicher?</h3>
-        <form action="/kaufen" method="POST">
-            <button type="submit">Kaufen</button>
-        </form>
-        <form action="/nicht_kaufen" method="POST">
-            <button type="submit">Noch nicht</button>
-        </form>
+        <div id="sicher">
+            <h3>Sind Sie sich sicher?</h3>
+            <div id="sure">
+                <form action="/kaufen" method="POST">
+                    <button type="submit">Kaufen</button>
+                </form>
+                <form action="/nicht_kaufen" method="POST">
+                    <button type="submit">Noch nicht</button>
+                </form>
+            </div>
+        </div>
     </body>
 </html>

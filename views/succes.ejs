@@ -2,10 +2,24 @@
 <html>
     <head>
         <title>Eingeloggt!</title>
+        <link rel='stylesheet' href='/css/style.css' />
+        <style>
+            h1{
+                font-size: 200%;
+                display:flex;
+                flex-direction: column;
+                justify-content: space-evenly;
+                align-items: center;
+                margin-top: 2%;
+            }
+        </style>
     </head>
     <body>
         <h1>Erfolgreich eingeloggt.</h1>
-        <h3>Willkommen <%=name1%></h3>
-        <a href="/overview">zum Shop.</a>
+        <div id="erfolgreich">
+            <h3>Willkommen <%=name1%></h3><br>
+            <a href="/overview">zum Shop.</a><br>
+            <a href="/warenkorb">Zu meinem Warenkorb</a>
+        </div>
     </body>
 </html>

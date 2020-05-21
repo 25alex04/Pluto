@@ -120,6 +120,10 @@ app.get("/zahlen",function(req,res){
     }
 })
 
+app.get("/pw",function(req,res){
+    res.sendFile(__dirname + "/views/pw_ändern.html")
+})
+
 //Sign-in und Sign-up
 app.post("/signin", function(req,res){
     const u_name = req.body.username;
@@ -512,6 +516,65 @@ app.post("/pw_vergessen",function(req,res){
         })
 })
 
+app.post("/pw_vergessen2",function(req,res){
+    const username = req.body.u_name
+    const z_1 = req.body.z1
+    const z_2 = req.body.z2
+    const z_3 = req.body.z3
+    const pw1 = req.body.pw_1
+    const pw2 = req.body.pw_2
+    let errors = []
+
+    if(!username){
+        errors.push('keinen Username angegeben')
+    }
+    if(!z_1){
+        errors.push('1. Sicherheitszahl nicht gegeben')
+    }
+
+    if(!z_2){
+        errors.push('2. Sicherheitszahl nicht gegeben')
+    }
+
+    if(!z_3){
+        errors.push('3. Sicherheitszahl nicht gegeben')
+    }
+
+    if(pw1!=pw2){
+        errors.push('Ihre angegebenen Passwörter stimmen nicht überein')
+    }
+
+    db.all(
+        `SELECT * FROM user WHERE username="${username}"`,
+        function(err,rows){
+            
+            if(rows.length<1){
+                errors.push('Ihre Username existiert noch nicht')
+            }
+
+            if(z_1!=rows[0].zahl1 || z_2!=rows[0].zahl2  || z_3!=rows[0].zahl3){
+                errors.push('Mindestens eine Ihrer Sicherheitszahlen ist falsch')
+            }
+
+            const hash = Bcrypt.hashSync(pw1,10);
+
+            if(errors.length<1){
+                db.run(
+                    `UPDATE user SET password="${hash}" WHERE username="${username}"`,
+                    function(err){}
+                )
+                res.render("passwort2",{"n_name":username})
+            }else{
+                let errdata ='Wir konnten Ihr Passwort nicht ändern:<ul>';
+                for(let e of errors){
+                    errdata += `<li>${ e }</li>`;
+                }
+                errdata += '</ul>'
+                res.send(errdata + '<br><a href="/pw">zurück</a>')
+            }
+        })
+})
+
 app.post("/geandert",function(req,res){
     const user = req.session.sessionValue[1]
     const password = req.body.pw
@@ -602,7 +665,7 @@ app.post("/neue_zahlen",function(req,res){
             }
             if(errors.length<1){
                 db.run(
-                    `UPDATE user SET zahl1=${z1},zahl2=${z2},zahl3=${z3} WHERE username="${user}`,
+                    `UPDATE user SET zahl1=${z1},zahl2=${z2},zahl3=${z3} WHERE username="${user}"`,
                     function(err){}
                 )
                 res.redirect("/warenkorb")

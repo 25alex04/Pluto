@@ -2,54 +2,58 @@
 <html>
     <head>
         <title>Registrieren</title>
+        <link rel='stylesheet' href='/css/style.css' />
+        <style>
+            button{
+                height:50px;
+                width:130px;
+                cursor:pointer;
+                font-size: 80%;
+            }
+        </style>
     </head>
     <body>
         <h2>Erstellen Sie ihren Account.</h2>
-        <hr>
         <form action="/signup" method="POST">
-            <fieldset> 
-                <div>
+            <fieldset id="zwei"><br> 
+                <div id="formular">
                     Vorname:<br>
                     <input type="text" name="v_name"><br>
-                </div>
-                <div>
+                
                     Nachname:<br>
                     <input type="text" name="n_name"><br>
-                </div> 
-                <div>
+        
                     Username:<br> 
                     <input type="text" name="username"><br>
-                </div>
-                <div>
+                
                     E-Mail:<br>
                     <input type="email" name="email"><br>
-                </div>
-                <div>
+                
                     Passwort:<br>
                     <input type="password" name="password_1"><br>
-                </div>
-                <div>
+                
                     Passwort wiederholen:<br>
-                    <input type="password" name="password_2"><br><br>
-                </div>
-                <p>Geben Sie drei Sicherheitszahlen an die zwischen 0 und 1000 liegen.(0 und 1000 ausgeschlossen)</p>
-                <div>
+                    <input type="password" name="password_2"><br>
+                    <div id="extrawurst">
+                        <p>Geben Sie drei Sicherheitszahlen an die zwischen 0 und 1000 liegen.(0 und 1000 ausgeschlossen)</p>
+                    </div><br>
                     Sicherheitszahl 1:<br>
                     <input type="number" name="z_1"><br>
-                </div>
-                <div>
+                
                     Sicherheitszahl 2:<br>
                     <input type="number" name="z_2"><br>
-                </div>
-                <div>
+                
                     Sicherheitszahl 3:<br>
                     <input type="number" name="z_3"><br>
                 </div>
-                <button type="submit">Sign up.</button><br>
-            </fieldset> 
+            </fieldset>
+            <div id="button1">
+                <button type="submit">Sign up.</button>
+            </div>
         </form> 
-        <hr>
-        <p>Ich habe schon einen Account. <a href="/signin"> Anmelden.</a></p>
-        <p>Ach die Willkommensseite war so toll <a href="/">Back to the Roots :D</a></p>
+        <div id="regis">
+            <p>Ich habe schon einen Account. <a href="/signin"> Anmelden.</a></p>
+            <p>Ach die Willkommensseite war so toll <a href="/">Back to the Roots :D</a></p>
+        </div>
     </body>
 </html>

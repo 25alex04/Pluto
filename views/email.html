@@ -2,17 +2,55 @@
 <html>
     <head>
         <title>E-Mail ändern</title>
+        <link rel='stylesheet' href='/css/style.css' />
+        <style>
+            h1{
+                display:flex;
+                flex-direction: row;
+                justify-content:left;
+                align-items: left;
+                margin-top: 2%;
+                margin-bottom: 2%;
+                margin-left: 2%;
+                font-size: 200%;
+            }
+
+            button{
+                background-color: #5882fa;
+                height:40px;
+                width:100px;
+                cursor:pointer;
+                margin-top:0;
+                margin-left: 2%;
+                font-size: 100%;
+            }
+            a{
+                display:block;
+                position: fixed;
+                bottom: 60%;
+                left:2%;
+                right:0;
+                top:39%;
+                font-size: 120%;
+            }
+        </style>
     </head>
     <body>
         <h1>Hier ändern Sie ihre E-Mail</h1>
         <form action="/geandert" method="POST">
-            Ihr Passwort:<br>
-            <input type="password" name="pw"><br>
-            Ihre neue E-Mail:<br>
-            <input type="email" name="email1"><br>
-            E-Mail wiederholen:<br>
-            <input type="email" name="email2"><br>
-            <button type="submit">Bestätigen</button>
+            <div id="eingabe">
+                Ihr Passwort:<br>
+                <input type="password" name="pw"><br>
+            </div>
+            <div id="eingabe">
+                Ihre neue E-Mail:<br>
+                <input type="email" name="email1"><br>
+            </div>
+            <div id="eingabe">
+                E-Mail wiederholen:<br>
+                <input type="email" name="email2">
+            </div>
+                <button type="submit">Bestätigen</button>
         </form>
         <a href="/warenkorb">Zurück zum Warenkorb</a>
     </body>

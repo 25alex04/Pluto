@@ -2,16 +2,52 @@
 <html>
     <head>
         <title>Sicherheitszahlen ändern</title>
+        <link rel='stylesheet' href='/css/style.css' />
+        <style>
+            h1{
+                display:flex;
+                flex-direction: row;
+                justify-content:left;
+                align-items: left;
+                margin-top: 2%;
+                margin-bottom: 2%;
+                margin-left: 2%;
+                font-size: 200%;
+            }
+            button{
+                background-color: #5882fa;
+                height:40px;
+                width:100px;
+                cursor:pointer;
+                margin-top:0;
+                margin-left: 2%;
+                font-size: 100%;
+            }
+
+            a{
+                display:block;
+                position: fixed;
+                bottom: 60%;
+                left:2%;
+                right:0;
+                top:38%;
+                font-size: 100%;
+            }
+        </style>
     </head>
     <body>
         <h1>Ändern Sie hier Ihre Sicherheitszahlen:</h1>
         <form action="/neue_zahlen" method="POST">
-            Ihr Passwort:<br>
-            <input type="password" name="pw"><br>
-            Ihre neuen Sicherheitszahlen zwischen 0 und 1000(bitte aufschreiben):<br>
-            Zahl 1: <input type="number" name="z_1"><br>
-            Zahl 2: <input type="number" name="z_2"><br>
-            Zahl 3: <input type="number" name="z_3"><br>
+            <div id="eingabe">
+                Ihr Passwort:<br>
+                <input type="password" name="pw"><br>
+            </div>
+            <div id="eingabe">
+                Ihre neuen Sicherheitszahlen zwischen 0 und 1000(bitte aufschreiben):<br>
+                Zahl 1: <input type="number" name="z_1"><br>
+                Zahl 2: <input type="number" name="z_2"><br>
+                Zahl 3: <input type="number" name="z_3"><br>
+            </div>
             <button type="submit">Bestätigen</button><br>
         </form>
         <a href="/warenkorb">Zurück zum Warenkorb</a>

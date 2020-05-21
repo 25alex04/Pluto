@@ -1,13 +1,31 @@
 <!DOCTYPE html>
 <html>
-    <head><title>Sicher?</title></head>
+    <head>
+        <title>Sicher?</title>
+        <link rel='stylesheet' href='/css/style.css' />
+        <style>
+            form{
+                margin-left: 10%;
+                margin-right: 10%;
+            }
+            button{
+                font-size: 120%;
+                height:50px;
+                width: 150px;
+            }
+        </style>
+    </head>
     <body>
-        <p>Wollen Sie <%=pro[0].name%> in ihren Warenkorb packen?</p>
-        <form action="/sicher/<%=pro[0].id%>" method="POST">
-            <button type="submit">Ja</button>
-        </form>
-        <form action="/unsicher/<%=pro[0].id%>" method="POST">
-            <button type="submit">Nein</button>
-        </form>
+        <div id="sicher">
+            <p>Wollen Sie <%=pro[0].name%> in ihren Warenkorb packen?</p>
+            <div id="sure">
+                <form action="/sicher/<%=pro[0].id%>" method="POST">
+                    <button type="submit">Ja</button>
+                </form>
+                <form action="/unsicher/<%=pro[0].id%>" method="POST">
+                    <button type="submit">Nein</button>
+                </form>
+            </div>
+        </div>
     </body>
 </html>
