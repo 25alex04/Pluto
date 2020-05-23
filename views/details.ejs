@@ -24,7 +24,7 @@
                 display:block;
                 position: fixed;
                 bottom: 60%;
-                left:44%;
+                left:49%;
                 right:0;
                 top:25%;
             }
@@ -58,6 +58,18 @@
         <div id="a3">
             <a href="/warenkorb">Ihr Warenkorb</a>
         </div>
-        <a href="/nudeln">zurück zu Nudeln</a>
+        
+        <% if(produkt[0].kategorie == "nudeln"){%>
+            <a href="/nudeln">zurück zu Nudeln</a>
+        <%}%>
+
+        <% if(produkt[0].kategorie == "klopapier"){%>
+            <a href="/klopapier">zurück zum Klopapier</a>
+        <%}%>
+
+        <% if(produkt[0].kategorie == "desinfektion"){%>
+            <a href="/desinfektionszeug">zurück zur Desinfektionsübersicht</a>
+        <%}%>
+        
     </body>
 </html>

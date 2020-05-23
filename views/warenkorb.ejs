@@ -22,15 +22,21 @@
                 font-size: 80%;
                 margin-top:1%;
             }
+            #leer{
+                margin-top: 1%;
+                margin-left: 2%;
+            }
             
         </style>
     </head>
     <body>
         <h1>Ihr Warenkorb</h1>
         
-        <% if(warenkorb.length ==0){%>
-            <p>Ihr Warenkorb ist leer.</p>
-        <%}%>
+        <div id="leer">
+            <% if(warenkorb.length ==0){%>
+                <p>Ihr Warenkorb ist leer.</p>
+            <%}%>
+        </div>
         
         <fieldset id="drei">    
             <table id="produkte">
